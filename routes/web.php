@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AgenciasController;
 use App\Http\Controllers\CargosController;
-
+use App\Http\Controllers\EjecutivosController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -31,4 +31,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resources([
     'agencias' => AgenciasController::class,
     'cargos' => CargosController::class,
+    'ejecutivos' => EjecutivosController::class,
 ]);

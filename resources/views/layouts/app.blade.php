@@ -14,6 +14,7 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
@@ -37,6 +38,15 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+                        @auth
+                        <a class="nav-link" href="{{ URL::to('agencias') }}">{{ __('Agencias') }}</a>
+                        @endauth
+                        @auth
+                        <a class="nav-link" href="{{ URL::to('cargos') }}">{{ __('Cargos') }}</a>
+                        @endauth
+                        @auth
+                        <a class="nav-link" href="{{ URL::to('ejecutivos') }}">{{ __('Ejecutivos') }}</a>
+                        @endauth
                         <!-- Authentication Links -->
                         @guest
                         @if (Route::has('login'))
@@ -76,6 +86,7 @@
         <main class="py-4">
             @yield('content')
         </main>
+
     </div>
 </body>
 

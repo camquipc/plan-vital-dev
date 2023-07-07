@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cargos as ModelsCargos;
 use Illuminate\Http\Request;
+use App\Models\Cargos;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CargosController extends Controller
 {
@@ -11,7 +14,9 @@ class CargosController extends Controller
      */
     public function index()
     {
-        //
+        $cargos =  Cargos::all();
+
+        return view('cargos.index', ['cargos' => $cargos]);
     }
 
     /**
@@ -19,7 +24,7 @@ class CargosController extends Controller
      */
     public function create()
     {
-        //
+        return view('cargos.crear');
     }
 
     /**
@@ -27,7 +32,26 @@ class CargosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $campos = [
+            'nombre' => 'required|max:100',
+
+        ];
+
+        $mensaje = [
+            'required' => 'El :attribute es requerido',
+            'max' => 'No debe ser mayor a 100 caracteres'
+        ];
+
+        $this->validate($request, $campos, $mensaje);
+
+        $cargo = new Cargos();
+        $cargo->nombre = $request->nombre;
+        $cargo->save();
+
+        Alert::success('Estado', 'Cargo creado!');
+
+        return redirect('cargos');
     }
 
     /**
@@ -43,7 +67,8 @@ class CargosController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $cargo = Cargos::findOrFail($id);
+        return view('cargos.editar', compact('cargo'));
     }
 
     /**
@@ -51,7 +76,26 @@ class CargosController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $campos = [
+            'nombre' => 'required|max:100',
+
+        ];
+
+        $mensaje = [
+            'required' => 'El :attribute es requerido',
+            'max' => 'No debe ser mayor a 100 caracteres'
+        ];
+
+        $this->validate($request, $campos, $mensaje);
+
+        $data = request()->except('_token', '_method');
+
+
+        Cargos::where('id', '=', $id)->update($data);
+
+        Alert::success('Estado', 'Cargo editado!');
+
+        return redirect('cargos');
     }
 
     /**
@@ -59,6 +103,10 @@ class CargosController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $cargo = Cargos::where('id', $id)->first();
+
+        $cargo->delete();
+        Alert::success('Estado', 'Cargo eliminado!');
+        return back();
     }
 }

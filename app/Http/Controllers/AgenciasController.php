@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agencias;
 use Illuminate\Http\Request;
+
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AgenciasController extends Controller
 {
@@ -11,6 +14,9 @@ class AgenciasController extends Controller
      */
     public function index()
     {
+        $agencias =  Agencias::all();
+
+        return view('agencias.index', ['agencias' => $agencias]);
     }
 
     /**
@@ -18,7 +24,7 @@ class AgenciasController extends Controller
      */
     public function create()
     {
-        //
+        return view('agencias.crear');
     }
 
     /**
@@ -26,7 +32,27 @@ class AgenciasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $campos = [
+            'nombre' => 'required|max:100',
+            'cod_agencia' => 'required',
+        ];
+
+        $mensaje = [
+            'required' => 'El :attribute es requerido',
+            'max' => 'No debe ser mayor a 100 caracteres'
+        ];
+
+        $this->validate($request, $campos, $mensaje);
+
+        $agencia = new Agencias();
+        $agencia->nombre = $request->nombre;
+        $agencia->cod_agencia = $request->cod_agencia;
+        $agencia->save();
+
+        Alert::success('Estado', 'Agencia creada!');
+
+        return redirect('agencias');
     }
 
     /**
@@ -42,7 +68,8 @@ class AgenciasController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $agencia = Agencias::findOrFail($id);
+        return view('agencias.editar', compact('agencia'));
     }
 
     /**
@@ -50,7 +77,26 @@ class AgenciasController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $campos = [
+            'nombre' => 'required|max:100',
+            'cod_agencia' => 'required',
+        ];
+
+        $mensaje = [
+            'required' => 'El :attribute es requerido',
+            'max' => 'No debe ser mayor a 100 caracteres'
+        ];
+
+        $this->validate($request, $campos, $mensaje);
+
+        $data = request()->except('_token', '_method');
+
+
+        Agencias::where('id', '=', $id)->update($data);
+
+        Alert::success('Estado', 'Agencia editada!');
+
+        return redirect('agencias');
     }
 
     /**
@@ -58,6 +104,10 @@ class AgenciasController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $agencia = Agencias::where('id', $id)->first();
+
+        $agencia->delete();
+        Alert::success('Estado', 'Agencia eliminada!');
+        return back();
     }
 }
