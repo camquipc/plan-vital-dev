@@ -51,16 +51,16 @@
     <select class="form-control" id="estado" name="estado">
         <option value="0">Selecciona un estado</option>
         @isset($ejecutivo)
-        @if ($ejecutivo->estado === 'S')
-        <option value="S" selected>SI</option>
-        <option value="N">NO</option>
+        @if ($ejecutivo->estado === 'V')
+        <option value="V" selected>V</option>
+        <option value="N">N</option>
         @else
-        <option value="S">SI</option>
-        <option value="N" selected>NO</option>
+        <option value="V">V</option>
+        <option value="N" selected>N</option>
         @endif
         @else
-        <option value="S">SI</option>
-        <option value="N">NO</option>
+        <option value="V">V</option>
+        <option value="N">N</option>
         @endisset
     </select>
 </div>

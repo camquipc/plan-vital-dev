@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('rut')->unique();
             $table->integer('agencia_id');
             $table->integer('cargo_id');
-            $table->string('estado', 1);
+            $table->enum('estado', ['V', 'N']);
             $table->timestamps();
         });
     }

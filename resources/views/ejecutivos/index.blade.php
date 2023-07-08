@@ -26,8 +26,8 @@
                         <thead>
                             <tr>
                                 <th scope="col" style="width:5%">#</th>
-                                <th scope="col" style="width:20%">Nombre</th>
-                                <th scope="col" style="width:20%">RUT</th>
+                                <th scope="col" style="width:20%">Nombre Ejecutivo</th>
+                                <th scope="col" style="width:20%">Rut Ejecutivo</th>
                                 <th scope="col" style="width:20%">Agencia</th>
                                 <th scope="col" style="width:20%">Cargo</th>
                                 <th scope="col" style="width:5%">Estado</th>
