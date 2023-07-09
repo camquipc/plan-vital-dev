@@ -38,15 +38,20 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-                        @auth
+
+                        @if (Auth::user())
+
+                        @if (Auth::user()->role === 'admin')
+
                         <a class="nav-link" href="{{ URL::to('agencias') }}">{{ __('Agencias') }}</a>
-                        @endauth
-                        @auth
+
                         <a class="nav-link" href="{{ URL::to('cargos') }}">{{ __('Cargos') }}</a>
-                        @endauth
-                        @auth
+
                         <a class="nav-link" href="{{ URL::to('ejecutivos') }}">{{ __('Ejecutivos') }}</a>
-                        @endauth
+                        @endif
+                        @endif
+
+
                         <!-- Authentication Links -->
                         @guest
                         @if (Route::has('login'))
