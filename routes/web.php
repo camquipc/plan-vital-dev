@@ -31,5 +31,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resources([
     'agencias' => AgenciasController::class,
     'cargos' => CargosController::class,
-    'ejecutivos' => EjecutivosController::class,
+    //'ejecutivos' => EjecutivosController::class,
 ]);
+
+Route::get('ejecutivos', [EjecutivosController::class, 'index'])->name('ejecutivos')->middleware('canAccess');

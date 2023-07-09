@@ -7,7 +7,10 @@
             <div class="card">
                 <div class="card-header">{{ __('Asistencia Sucursales 4.0') }}</div>
                 <div class="card-body">
-                    {{ __('APP PlanVital') }}
+                    <form action="/cargos" method="POST">
+                        {{ csrf_field() }}
+                        @include('layouts.form', ['modo' => 'Crear'])
+                    </form>
                 </div>
             </div>
         </div>

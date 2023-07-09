@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agencias;
+use App\Models\Cargos;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $cargos = Cargos::select('id', 'nombre')->get();
+        $agencias = Agencias::select('id', 'nombre')->get();
+
+        return view('home', ['cargos' => $cargos, 'agencias' => $agencias]);
     }
 }
