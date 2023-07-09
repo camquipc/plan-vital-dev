@@ -32,4 +32,4 @@ Route::resources([
     'agencias' => AgenciasController::class,
     'cargos' => CargosController::class,
     'ejecutivos' => EjecutivosController::class,
-])->middleware('auth.admin');
+]);
