@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\Http\Controllers\AgenciasController;
+use App\Http\Controllers\AsistenciasController;
 use App\Http\Controllers\CargosController;
 use App\Http\Controllers\EjecutivosController;
 
@@ -23,15 +24,23 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
 
+Route::group(['middleware' => 'canAccess'], function () {
+    Route::resources([
+        'agencias' => AgenciasController::class,
+    ]);
+    Route::resources([
+        'cargos' => CargosController::class,
+    ]);
+    Route::resources([
+        'ejecutivos' => EjecutivosController::class,
+    ]);
+});
 
 
-Route::resources([
-    'agencias' => AgenciasController::class,
-    'cargos' => CargosController::class,
-    //'ejecutivos' => EjecutivosController::class,
-]);
-
-Route::get('ejecutivos', [EjecutivosController::class, 'index'])->name('ejecutivos')->middleware('canAccess');
+Route::post('api_ejecutivos', [EjecutivosController::class, 'index_api'])->name('api_ejecutivos');
+Route::post('api_ejecutivos_cargo', [EjecutivosController::class, 'get_api_cargo'])->name('api_ejecutivos_cargo');
+Route::get('api_ejecutivos_tem/{fecha}', [AsistenciasController::class, 'get_tem'])->name('api_ejecutivos_tem');
+Route::post('api_ejecutivos_tem', [AsistenciasController::class, 'set_tem'])->name('api_ejecutivos_tem');

@@ -23,6 +23,34 @@ class EjecutivosController extends Controller
         return view('ejecutivos.index', ['ejecutivos' => $ejecutivos]);
     }
 
+    public function index_api(Request $request)
+    {
+        $ejecutivos = Ejecutivos::select('ejecutivos.*', 'cargos.nombre as c_nombre', 'agencias.nombre as a_nombre')
+            ->join('agencias', 'ejecutivos.agencia_id', '=', 'agencias.id')
+            ->join('cargos', 'ejecutivos.cargo_id', '=', 'cargos.id')
+            ->where('agencia_id', '=', $request->get('agencia_id'))
+            ->get();
+        return response()->json([
+            'data' => $ejecutivos,
+            'success' => true
+        ]);
+    }
+
+    public function  get_api_cargo(Request $request)
+    {
+        $cargo = Cargos::select('cargos.id', 'cargos.nombre as c_nombre')
+            ->join('ejecutivos', 'ejecutivos.cargo_id', '=', 'cargos.id')
+            ->where('ejecutivos.id', '=', $request->get('ejecutivo_id'))
+            ->get();
+
+        return response()->json([
+            'data' => $cargo,
+            'success' => true
+        ]);
+    }
+
+
+
     /**
      * Show the form for creating a new resource.
      */

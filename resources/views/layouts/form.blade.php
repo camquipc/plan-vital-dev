@@ -13,9 +13,10 @@
     <div class="col-md-3">
         <div class="form-group mt-3">
             <label for="nombre">Sucursal</label>
-            <select class="form-control" id="agencia" name="agencia" value="{{old('agencia_id')}}">
+            <select class="form-control" id="agencia" name="agencia">
+                <option value="">Seleccionar sucursal </option>
                 @foreach ($agencias as $agencia)
-                <option value="{{$agencia->id}}" {{ isset($ejecutivo->agencia_id) && $agencia->id == $ejecutivo->agencia_id ? 'selected' : ''}}>{{$agencia->nombre}}</option>
+                <option value="{{$agencia->id}}">{{$agencia->nombre}}</option>
                 @endforeach
             </select>
         </div>
@@ -23,10 +24,11 @@
     <div class="col-md-3">
         <div class="form-group mt-3">
             <label for="nombre">Estado</label>
-            <select class="form-control" id="estado" name="estado" value="{{old('estado')}}">
-                <option value="0">Sano - Trabajando en Oficina</option>
-                <option value="0">Vacaciones</option>
-                <option value="0">Licencia Normal</option>
+            <select class="form-control" id="estado" name="estado">
+                <option value="">Seleccionar estado </option>
+                <option value="Sano - Trabajando en Oficina">Sano - Trabajando en Oficina</option>
+                <option value="Vacaciones">Vacaciones</option>
+                <option value="Licencia Normal">Licencia Normal</option>
 
             </select>
         </div>
@@ -34,62 +36,62 @@
     <div class="col-md-2">
         <div class="form-group mt-3">
             <label for="nombre">Cargo</label>
-            <input type="text" class="form-control" id="nombre" placeholder="Test" name="nombre" value="{{ isset($cargo->nombre) ? $cargo->nombre : old('nombre') }}">
+            <select class="form-control" id="cargo" name="cargo" value="" disabled>
+                <option value="">Sin cargo </option>
+                @foreach ($cargos as $cargo)
+                <option value="{{$cargo->id}}">{{$cargo->nombre}}</option>
+                @endforeach
+            </select>
         </div>
     </div>
-    <div class="col-md-1">
+    <div class="col-md-2">
         <div class="form-group mt-3">
             <label for="nombre">Jefatura</label>
-            <select class="form-control" id="jefatura" name="jefatura" value="{{old('jefatura')}}">
-                <option value="0">SI</option>
-                <option value="0">NO</option>
+            <select class="form-control" id="jefatura" name="jefatura">
+                <option value="">Seleccionar jefatura</option>
+                <option value="S">SI</option>
+                <option value="N">NO</option>
             </select>
         </div>
     </div>
 
-    <div class="col-md-2 mt-3">
-        <div class="form-group mt-3">
-            <label for="nombre"></label>
-            <button type="submit" class="btn btn-primary ">Agreagar</button>
-        </div>
-
+    <div class="col-md-2 d-flex align-items-end justify-content-md-between">
+        <button type="button" class="btn btn-primary" id="btn_agregar">Agreagar</button>
+        <button type="button" class="btn btn-outline-danger ">Borrar</button>
     </div>
 </div>
 
-<div class="row">
+<div class="row mt-3">
 
     <div class="col-md-3">
         <label for="rut">Fecha</label>
         <input type="date" class="form-control" id="fecha" name="fecha">
+        <div class="mt-4 listado" id="listado"></div>
+    </div>
+    <div class="col-md-9">
+        <label class="text-center">Registro de asistencias</label>
+        <div class="well">
 
-        <div class="mt-4 listado">
-            <ul class="list-group">
-                <li class="list-group-item">Cras justo odio</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Morbi leo risus</li>
-                <li class="list-group-item">Porta ac consectetur ac</li>
-                <li class="list-group-item">Vestibulum at eros</li>
-            </ul>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre Ejecutivo</th>
+                        <th scope="col">Cargo Ejecutivo</th>
+                        <th scope="col">Jefatura</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Sucursal</th>
+                        <th scope="col">Fecha</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+
+                </tbody>
+            </table>
         </div>
     </div>
-    <div class="col-md-8">
-        <table class="table mt-3">
-            <thead style="background-color: red;">
-                <tr>
-                    <th scope="col">Nombre Ejecutivo</th>
-                    <th scope="col">Cargo Ejecutivo</th>
-                    <th scope="col">Jefatura</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Sucursal</th>
-                    <th scope="col">Fecha</th>
-                </tr>
-            </thead>
-            <tbody>
 
-            </tbody>
-        </table>
+    <div class="col-md-12 d-flex align-items-end justify-content-md-end">
+        <button type="submit" class="btn btn-primary mt-4 col-2">Grabar</button>
     </div>
-
-    <button type="submit" class="btn btn-primary mt-4">Grabar</button>
 
 </div>

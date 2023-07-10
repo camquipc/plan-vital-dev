@@ -6,3 +6,47 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+
+.listado {
+    width: 100%;
+    min-height: 100px;
+    padding: 3px;
+    overflow-y: scroll;
+
+}
+
+
+
+.well {
+    width: 100%;
+    overflow-y: scroll;
+}
+
+#listado label {
+    float: left;
+    width: 100%;
+    height: auto;
+    margin: 2px;
+    background-color: #EFEFEF;
+    border-radius: 4px;
+    border: 1px solid #D0D0D0;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+#listado label span {
+    text-align: left;
+    padding: 5px;
+    display: block;
+}
+
+#listado label input {
+    position: absolute;
+    display: none;
+}
+
+#listado input:checked+span {
+    background-color: #404040;
+    color: #F7F7F7;
+}
