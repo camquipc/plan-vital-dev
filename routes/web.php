@@ -26,6 +26,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
+Route::get('/asistencias', [App\Http\Controllers\AsistenciasController::class, 'index'])->name('asistencias')->middleware('auth');
 
 Route::group(['middleware' => 'canAccess'], function () {
     Route::resources([

@@ -38,22 +38,8 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-
-                        @if (Auth::user())
-
-                        @if (Auth::user()->role === 'admin')
-
-                        <a class="nav-link" href="{{ URL::to('agencias') }}">{{ __('Agencias') }}</a>
-
-                        <a class="nav-link" href="{{ URL::to('cargos') }}">{{ __('Cargos') }}</a>
-
-                        <a class="nav-link" href="{{ URL::to('ejecutivos') }}">{{ __('Ejecutivos') }}</a>
-
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('Usuarios') }}</a>
-                        @endif
-                        @endif
-
                         @auth
+                        <a class="nav-link" href="{{ URL::to('asistencias') }}">{{ __('Asistencias') }}</a>
                         <a class="nav-link" href="{{ URL::to('ejecutivos') }}">{{ __('Descargar Excel') }}</a>
                         @endauth
 
@@ -78,9 +64,18 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+                                @if (Auth::user())
+                                @if (Auth::user()->role === 'admin')
+                                <a class="dropdown-item" href="{{ URL::to('agencias') }}">{{ __('Agencias') }}</a>
+                                <a class="dropdown-item" href="{{ URL::to('cargos') }}">{{ __('Cargos') }}</a>
+                                <a class="dropdown-item" href="{{ URL::to('ejecutivos') }}">{{ __('Ejecutivos') }}</a>
+                                <a class="dropdown-item" href="{{ URL::to('register') }}">{{ __('Usuarios') }}</a>
+                                @endif
+                                @endif
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    {{ __('Salir') }}
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

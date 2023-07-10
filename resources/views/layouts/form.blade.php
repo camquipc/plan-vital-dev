@@ -62,10 +62,10 @@
 </div>
 
 <div class="row mt-3">
-
+    <input type="hidden" id="selected_ejecutivo" value="null">
     <div class="col-md-3">
         <label for="rut">Fecha</label>
-        <input type="date" class="form-control" id="fecha" name="fecha">
+        <input type="date" class="form-control" id="fecha" name="fecha" max="{{ now()->toDateString('Y-m-d') }}">
         <div class="mt-4 listado" id="listado"></div>
     </div>
     <div class="col-md-9">

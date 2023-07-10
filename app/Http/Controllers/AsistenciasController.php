@@ -4,11 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Ejecutivos;
 use App\Models\Temporal;
+use App\Models\Agencias;
+use App\Models\Cargos;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AsistenciasController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function index()
+    {
+        $cargos = Cargos::select('id', 'nombre')->get();
+        $agencias = Agencias::select('id', 'nombre')->get();
+
+        return view('asistencias', ['cargos' => $cargos, 'agencias' => $agencias]);
+    }
+
     public function get_tem($fecha)
     {
         $tem = Temporal::select('temporals.*', 'ejecutivos.nombres', 'ejecutivos.rut', 'ejecutivos.id', 'cargos.nombre as c_nombre', 'agencias.nombre as a_nombre')

@@ -7,7 +7,10 @@
             <div class="card">
                 <div class="card-header">{{ __('Asistencia Sucursales 4.0') }}</div>
                 <div class="card-body">
-                    <h1>Asistencia Sucursales 4.0</h1>
+                    <form action="/cargos" method="POST">
+                        {{ csrf_field() }}
+                        @include('layouts.form', ['modo' => 'Crear'])
+                    </form>
                 </div>
             </div>
         </div>
