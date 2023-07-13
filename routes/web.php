@@ -43,5 +43,7 @@ Route::group(['middleware' => 'canAccess'], function () {
 
 Route::post('api_ejecutivos', [EjecutivosController::class, 'index_api'])->name('api_ejecutivos');
 Route::post('api_ejecutivos_cargo', [EjecutivosController::class, 'get_api_cargo'])->name('api_ejecutivos_cargo');
-Route::get('api_ejecutivos_tem/{fecha}', [AsistenciasController::class, 'get_tem'])->name('api_ejecutivos_tem');
+Route::get('api_ejecutivos_tem', [AsistenciasController::class, 'get_tem'])->name('api_ejecutivos_tem');
 Route::post('api_ejecutivos_tem', [AsistenciasController::class, 'set_tem'])->name('api_ejecutivos_tem');
+Route::post('api_ejecutivos_delete', [AsistenciasController::class, 'delete_item'])->name('api_ejecutivos_delete');
+Route::post('api_asistencias_store', [AsistenciasController::class, 'store_item'])->name('api_asistencias_store');

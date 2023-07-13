@@ -41,12 +41,8 @@
 
                                     <div class="d-flex justify-content-between">
                                         <button type="button" class="btn btn-primary btn-sm mr-2"><a class="nav-link" href="{{ url('/agencias/'.$agencia->id.'/edit') }}">{{ __('Editar') }}</a></button>
+                                        <a href="{{ route('agencias.destroy', $agencia) }}" class="btn btn-danger" data-confirm-delete="true">Borrar</a>
 
-                                        <form id="agencias.destroy-form-{{$agencia->id}}" action="{{ route('agencias.destroy', $agencia) }}" method="POST" class="hidden" onclick="return confirm('¿Estás seguro de que quieres eliminar ?');">
-                                            {{ csrf_field() }}
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Borrar</button>
-                                        </form>
                                     </div>
                                 </td>
                             </tr>

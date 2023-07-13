@@ -13,7 +13,7 @@ class Temporal extends Model
         'cargo_id',
         'ejecutivo_id',
         'fecha',
-        'jefatura', 1,
-        'estado',
+        'jefatura',
+        'estado_id',
     );
 }

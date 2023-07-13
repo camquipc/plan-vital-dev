@@ -1,12 +1,5 @@
-@if(count($errors) > 0)
-<div class="alert alert-danger" role="alert">
-    <ul>
-        @foreach($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
+<div id="message"></div>
+
 
 <div class="row">
 
@@ -26,10 +19,9 @@
             <label for="nombre">Estado</label>
             <select class="form-control" id="estado" name="estado">
                 <option value="">Seleccionar estado </option>
-                <option value="Sano - Trabajando en Oficina">Sano - Trabajando en Oficina</option>
-                <option value="Vacaciones">Vacaciones</option>
-                <option value="Licencia Normal">Licencia Normal</option>
-
+                @foreach ($estado_ejecutivos as $estado_ejecutivo)
+                <option value="{{$estado_ejecutivo->id}}">{{$estado_ejecutivo->estado}}</option>
+                @endforeach
             </select>
         </div>
     </div>
@@ -49,15 +41,15 @@
             <label for="nombre">Jefatura</label>
             <select class="form-control" id="jefatura" name="jefatura">
                 <option value="">Seleccionar jefatura</option>
-                <option value="S">SI</option>
-                <option value="N">NO</option>
+                <option value="SI">SI</option>
+                <option value="NO">NO</option>
             </select>
         </div>
     </div>
 
     <div class="col-md-2 d-flex align-items-end justify-content-md-between">
         <button type="button" class="btn btn-primary" id="btn_agregar">Agreagar</button>
-        <button type="button" class="btn btn-outline-danger ">Borrar</button>
+        <button type="button" class="btn btn-outline-danger " id="btn-delete" disabled>Borrar</button>
     </div>
 </div>
 
@@ -81,6 +73,7 @@
                         <th scope="col">Estado</th>
                         <th scope="col">Sucursal</th>
                         <th scope="col">Fecha</th>
+
                     </tr>
                 </thead>
                 <tbody id="tbody">
@@ -91,7 +84,7 @@
     </div>
 
     <div class="col-md-12 d-flex align-items-end justify-content-md-end">
-        <button type="submit" class="btn btn-primary mt-4 col-2">Grabar</button>
+        <button type="button" class="btn btn-primary mt-4 col-2" id="btn-grabar" disabled>Grabar</button>
     </div>
 
 </div>

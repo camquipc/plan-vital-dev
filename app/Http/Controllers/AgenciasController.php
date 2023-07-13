@@ -15,6 +15,9 @@ class AgenciasController extends Controller
     public function index()
     {
         $agencias =  Agencias::all();
+        $title = 'Eliminar';
+        $text = "¿Estás seguro de que quieres eliminar ?";
+        confirmDelete($title, $text);
 
         return view('agencias.index', ['agencias' => $agencias]);
     }

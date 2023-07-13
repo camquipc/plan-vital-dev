@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -32,5 +33,12 @@ class DatabaseSeeder extends Seeder
         $user->password = 'user';
         $user->role = 'user';
         $user->save();
+
+
+        DB::table('estado_ejecutivos')->insert([
+            ['estado' => 'Sano - Trabajando en Oficina'],
+            ['estado' => 'Vacaciones'],
+            ['estado' => 'Licencia Normal'],
+        ]);
     }
 }

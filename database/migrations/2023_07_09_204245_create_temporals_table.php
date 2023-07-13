@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer('cargo_id');
             $table->integer('ejecutivo_id');
             $table->date('fecha');
-            $table->string('jefatura', 1);
-            $table->string('estado');
+            $table->string('jefatura', 2)->default('NO');
+            $table->integer('estado_id');
 
             $table->timestamps();
         });

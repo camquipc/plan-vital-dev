@@ -20,6 +20,9 @@ class EjecutivosController extends Controller
             ->join('agencias', 'ejecutivos.agencia_id', '=', 'agencias.id')
             ->join('cargos', 'ejecutivos.cargo_id', '=', 'cargos.id')
             ->get();
+        $title = 'Eliminar';
+        $text = "¿Estás seguro de que quieres eliminar ?";
+        confirmDelete($title, $text);
         return view('ejecutivos.index', ['ejecutivos' => $ejecutivos]);
     }
 

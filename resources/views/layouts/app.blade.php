@@ -21,6 +21,7 @@
 
 <body>
     <div id="app">
+        @include('sweetalert::alert')
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
@@ -54,7 +55,7 @@
 
                         @if (Route::has('register'))
                         <li class="nav-item">
-                            <!--<a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>-->
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
                         @endif
                         @else
@@ -70,7 +71,7 @@
                                 <a class="dropdown-item" href="{{ URL::to('agencias') }}">{{ __('Agencias') }}</a>
                                 <a class="dropdown-item" href="{{ URL::to('cargos') }}">{{ __('Cargos') }}</a>
                                 <a class="dropdown-item" href="{{ URL::to('ejecutivos') }}">{{ __('Ejecutivos') }}</a>
-                                <a class="dropdown-item" href="{{ URL::to('register') }}">{{ __('Usuarios') }}</a>
+
                                 @endif
                                 @endif
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -94,6 +95,7 @@
         </main>
 
     </div>
+    @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
 </body>
 
 </html>

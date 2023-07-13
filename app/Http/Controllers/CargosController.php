@@ -15,6 +15,9 @@ class CargosController extends Controller
     public function index()
     {
         $cargos =  Cargos::all();
+        $title = 'Eliminar';
+        $text = "¿Estás seguro de que quieres eliminar ?";
+        confirmDelete($title, $text);
 
         return view('cargos.index', ['cargos' => $cargos]);
     }

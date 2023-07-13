@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('asistencias', function (Blueprint $table) {
             $table->id();
+            $table->integer('agencia_id');
+            $table->integer('cargo_id');
+            $table->integer('ejecutivo_id');
             $table->date('fecha');
-            $table->string('cod_agencia');
-            $table->string('rut');
+            $table->string('jefatura', 2);
+            $table->integer('estado_id');
             $table->timestamps();
         });
     }
