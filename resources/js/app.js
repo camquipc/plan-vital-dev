@@ -89,14 +89,16 @@ document.getElementById("btn_agregar").addEventListener("click", (e) => {
 
             switch (data.type) {
                 case 'data-validacion':
-                    alert(data.message);
+
+                    swal(data.message, data.errors.toString(), "error");
                     break;
                 case 'data-duplicada':
                     alert(data.message);
+                    swal(data.message, "Verifique la información", "warning");
                     break;
 
                 default:
-                    alert(data.message);
+                    swal(data.message, "", "success");
                     getDataTable();
                     limpiar();
                     break;
@@ -153,71 +155,93 @@ function limpiar() {
 
 //grabar la asistencias
 document.getElementById('btn-grabar').addEventListener('click', (e) => {
-    let result = confirm('¿Estás seguro de que quieres grabar la data?');
-    if (result) {
-        let d_fecha = document.getElementById('fecha').value;
-        fetch(`api_asistencias_store`, {
-            method: "POST",
-            body: JSON.stringify({
-                fecha: d_fecha
-            }),
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-Token": csrfToken,
-            },
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                getDataTable();
-                document.getElementById('agencia').value = '';
-                document.getElementById("estado").value = "";
-                document.getElementById("cargo").value = "";
-                document.getElementById('fecha').value = '';
-                document.getElementById("jefatura").value = "";
-                document.getElementById("selected_ejecutivo").value = null;
-                document.getElementById("listado").innerHTML = "";
+    swal({
+        title: "Estás seguro?",
+        text: "La información sera guardada!",
+        icon: "info",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                let d_fecha = document.getElementById('fecha').value;
+                fetch(`api_asistencias_store`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        fecha: d_fecha
+                    }),
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-Token": csrfToken,
+                    },
+                })
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((data) => {
+                        getDataTable();
+                        document.getElementById('agencia').value = '';
+                        document.getElementById("estado").value = "";
+                        document.getElementById("cargo").value = "";
+                        document.getElementById('fecha').value = '';
+                        document.getElementById("jefatura").value = "";
+                        document.getElementById("selected_ejecutivo").value = null;
+                        document.getElementById("listado").innerHTML = "";
+                        document.getElementById("btn-delete").disabled = true;
+                        document.getElementById("btn-grabar").disabled = true;
 
-                document.getElementById("btn-delete").disabled = true;
-                document.getElementById("btn-grabar").disabled = true;
-                alert('Asistencias guardadas');
-            })
-            .catch((err) => console.error(err));
-    }
+                        swal("Asistencias guardadas", "", "success");
+                    })
+                    .catch((err) => console.error(err));
+            } else {
+                console.log("Your imaginary file is safe!");
+            }
+        });
 })
 
 //eliminar todos los registros
 document.getElementById('btn-delete').addEventListener('click', (e) => {
-    let result = confirm('¿Estás seguro de que quieres eliminar ?');
-    if (result) {
-        fetch(`api_ejecutivos_delete`, {
-            method: "POST",
-            body: JSON.stringify({
 
-            }),
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-Token": csrfToken,
-            },
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                getDataTable();
-                document.getElementById('agencia').value = '';
-                document.getElementById("estado").value = "";
-                document.getElementById("cargo").value = "";
-                document.getElementById('fecha').value = '';
-                document.getElementById("jefatura").value = "";
-                document.getElementById("selected_ejecutivo").value = null;
-                document.getElementById("listado").innerHTML = "";
+    swal({
+        title: "¿Estás seguro?",
+        text: "La información sera borrada!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                fetch(`api_ejecutivos_delete`, {
+                    method: "POST",
+                    body: JSON.stringify({
 
+                    }),
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-Token": csrfToken,
+                    },
+                })
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((data) => {
+                        getDataTable();
+                        document.getElementById('agencia').value = '';
+                        document.getElementById("estado").value = "";
+                        document.getElementById("cargo").value = "";
+                        document.getElementById('fecha').value = '';
+                        document.getElementById("jefatura").value = "";
+                        document.getElementById("selected_ejecutivo").value = null;
+                        document.getElementById("listado").innerHTML = "";
 
-            })
-            .catch((err) => console.error(err));
-    }
+                        swal("Información eliminada!", "", "success");
+                    })
+                    .catch((err) => console.error(err));
+            } else {
+                console.log("Your imaginary file is safe!");
+            }
+        });
+
 })
 
 function formatearFecha(fecha) {

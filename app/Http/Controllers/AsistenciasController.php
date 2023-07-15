@@ -55,12 +55,21 @@ class AsistenciasController extends Controller
             'estado_id' => 'required',
         ];
 
-        $validator = Validator::make($request->all(), $rules);
+        $messages = [
+            'fecha.required' => 'Fecha requerida',
+            'agencia_id.required' => 'Agencia requerida',
+            'cargo_id.required' => 'Cargo requerido',
+            'ejecutivo_id.required' => 'Ejecutivo requerido',
+            'jefatura.required' => 'Jefatura requerida',
+            'estado_id.required' => 'Estado requerido',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
             return response()->json([
                 'type' => 'data-validacion',
-                //'errors' => $validator->errors()->all(),
+                'errors' => $validator->errors()->all(),
                 'message' => "Error de validación"
             ]);
         }
