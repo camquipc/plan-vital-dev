@@ -121,7 +121,6 @@ function getDataTable() {
             let dat = "";
             if (data.data.length > 0) {
                 for (let i in data.data) {
-                    let fecha = new Intl.DateTimeFormat('es-CL').format(data.data[i].fecha);
                     dat += `
                          <tr>
                             <td scope="col">${data.data[i].nombres}</td>
@@ -129,7 +128,7 @@ function getDataTable() {
                             <td scope="col">${data.data[i].jefatura}</td>
                             <td scope="col">${data.data[i].estado}</td>
                             <td scope="col">${data.data[i].a_nombre}</td>
-                            <td scope="col">${fecha}</td>
+                            <td scope="col">${formatearFecha(data.data[i].fecha)}</td>
                         </tr>
                 `;
                 }
@@ -156,10 +155,11 @@ function limpiar() {
 document.getElementById('btn-grabar').addEventListener('click', (e) => {
     let result = confirm('¿Estás seguro de que quieres grabar la data?');
     if (result) {
+        let d_fecha = document.getElementById('fecha').value;
         fetch(`api_asistencias_store`, {
             method: "POST",
             body: JSON.stringify({
-                fecha: document.getElementById('fecha').value
+                fecha: d_fecha
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -170,7 +170,7 @@ document.getElementById('btn-grabar').addEventListener('click', (e) => {
                 return response.json();
             })
             .then((data) => {
-                // getDataTable();
+                getDataTable();
                 document.getElementById('agencia').value = '';
                 document.getElementById("estado").value = "";
                 document.getElementById("cargo").value = "";
@@ -219,5 +219,12 @@ document.getElementById('btn-delete').addEventListener('click', (e) => {
             .catch((err) => console.error(err));
     }
 })
+
+function formatearFecha(fecha) {
+    let fechaArray = fecha.split('-');
+    let fechaFormate = `${fechaArray[2]}-${fechaArray[1]}-${fechaArray[0]}`;
+
+    return fechaFormate;
+}
 
 

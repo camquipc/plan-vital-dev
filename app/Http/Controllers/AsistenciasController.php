@@ -10,6 +10,7 @@ use App\Models\Cargos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AsistenciasController extends Controller
 {
@@ -27,7 +28,7 @@ class AsistenciasController extends Controller
         return view('asistencias', ['cargos' => $cargos, 'agencias' => $agencias, 'estado_ejecutivos' => $estado_ejecutivos]);
     }
 
-    public function get_tem()
+    public function get_asistencias_temporal()
     {
         $tem = Temporal::select('temporals.*', 'estado_ejecutivos.estado', 'ejecutivos.nombres', 'ejecutivos.rut', 'ejecutivos.id', 'cargos.nombre as c_nombre', 'agencias.nombre as a_nombre')
             ->join('ejecutivos', 'ejecutivos.id', '=', 'temporals.ejecutivo_id')
@@ -43,7 +44,7 @@ class AsistenciasController extends Controller
         ]);
     }
 
-    public function set_tem(Request $request)
+    public function set_asistencia_temporal(Request $request)
     {
         $rules = [
             'fecha' => 'required',
@@ -90,7 +91,7 @@ class AsistenciasController extends Controller
         ]);
     }
 
-    public function store_item(Request $request)
+    public function store_asistencias(Request $request)
     {
         $temporal = Temporal::select('*')
             ->where('fecha', $request->get('fecha'))
@@ -98,6 +99,7 @@ class AsistenciasController extends Controller
 
         if ($temporal->count() > 0) {
             foreach ($temporal as $temp) {
+                //valida en la tabla asistencias si existe para el ejecutivo y fecha
                 $temporal = Asistencias::select('id')
                     ->where('fecha', $request->get('fecha'))
                     ->where('ejecutivo_id', $temp->ejecutivo_id)
@@ -115,6 +117,7 @@ class AsistenciasController extends Controller
             }
             //limpiando la tabla temporal
             Temporal::query()->delete();
+
             return response()->json([
                 'type' => 'success',
                 'message' => "Asistencias guardadas"
@@ -122,7 +125,7 @@ class AsistenciasController extends Controller
         }
     }
 
-    public function delete_item(Request $request)
+    public function delete_asistencias_temporal(Request $request)
     {
         $tem = Temporal::query()->delete();
         return response()->json([
