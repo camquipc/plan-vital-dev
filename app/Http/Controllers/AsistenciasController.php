@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ejecutivos;
+
 use App\Models\Temporal;
 use App\Models\Agencias;
 use App\Models\Asistencias;
@@ -10,7 +10,8 @@ use App\Models\Cargos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\Exports\AsistenciasExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AsistenciasController extends Controller
 {
@@ -141,5 +142,29 @@ class AsistenciasController extends Controller
             'type' => 'success',
             'message' => "Registros borrados"
         ]);
+    }
+
+    public function exportarExcelForm()
+    {
+        return View('exports.exportar_form');
+    }
+
+    public function exportarExcel(Request $request)
+    {
+
+        $rules = [
+            'fecha_inicial' => 'required',
+            'fecha_final' => 'required|after_or_equal:fecha_inicial',
+        ];
+
+        $messages = [
+            'fecha_inicial.required' => 'Fecha inicial requerida',
+            'fecha_final.required' => 'Fecha final requerida',
+            'fecha_final.after_or_equal' => 'Fecha inicial no debe ser mayor a la fecha final'
+        ];
+
+        $this->validate($request, $rules, $messages);
+
+        return Excel::download(new AsistenciasExport($request->get('fecha_inicial'), $request->get('fecha_final')), 'Registro_asitencias.xlsx');
     }
 }

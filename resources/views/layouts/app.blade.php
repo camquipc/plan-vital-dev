@@ -17,6 +17,16 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <style>
+        .logo {
+            height: 50px;
+        }
+
+        .bg-white {
+            background-color: #f7f7f7 !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -24,8 +34,9 @@
 
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/home') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <a class="navbar-brand" href="{{ url('/asistencias') }}">
+                    <!-- {{ config('app.name', 'Laravel') }}-->
+                    <img src="img/logo.jpeg" alt="logo" class="logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -41,7 +52,7 @@
                     <ul class="navbar-nav ms-auto">
                         @auth
                         <a class="nav-link" href="{{ URL::to('asistencias') }}">{{ __('Asistencias') }}</a>
-                        <a class="nav-link" href="{{ URL::to('ejecutivos') }}">{{ __('Descargar Excel') }}</a>
+                        <a class="nav-link" href="{{ URL::to('exportar_excel') }}">{{ __('Descargar Excel') }}</a>
                         @endauth
 
 
@@ -55,7 +66,7 @@
 
                         @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Regístrese') }}</a>
                         </li>
                         @endif
                         @else

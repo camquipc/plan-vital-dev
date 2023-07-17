@@ -40,6 +40,10 @@ Route::group(['middleware' => 'canAccess'], function () {
     ]);
 });
 
+Route::get('/exportar_excel', [App\Http\Controllers\AsistenciasController::class, 'exportarExcelForm'])->name('exportar-form')->middleware('auth');
+Route::post('/exportar', [App\Http\Controllers\AsistenciasController::class, 'exportarExcel'])->name('exportar')->middleware('auth');
+
+
 
 Route::post('api_ejecutivos', [EjecutivosController::class, 'index_api'])->name('api_ejecutivos');
 Route::post('api_ejecutivos_cargo', [EjecutivosController::class, 'get_api_cargo'])->name('api_ejecutivos_cargo');
