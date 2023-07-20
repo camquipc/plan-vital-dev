@@ -89,7 +89,6 @@ document.getElementById("btn_agregar").addEventListener("click", (e) => {
 
             switch (data.type) {
                 case 'data-validacion':
-
                     swal(data.message, data.errors.toString(), "error");
                     break;
                 case 'data-duplicada':
@@ -179,18 +178,38 @@ document.getElementById('btn-grabar').addEventListener('click', (e) => {
                         return response.json();
                     })
                     .then((data) => {
-                        getDataTable();
-                        document.getElementById('agencia').value = '';
-                        document.getElementById("estado").value = "";
-                        document.getElementById("cargo").value = "";
-                        document.getElementById('fecha').value = '';
-                        document.getElementById("jefatura").value = "";
-                        document.getElementById("selected_ejecutivo").value = null;
-                        document.getElementById("listado").innerHTML = "";
-                        document.getElementById("btn-delete").disabled = true;
-                        document.getElementById("btn-grabar").disabled = true;
 
-                        swal("Asistencias guardadas", "", "success");
+                        switch (data.type) {
+                            case 'error':
+                                swal(data.message, data.errors.toString(), "error");
+                                getDataTable();
+                                document.getElementById('agencia').value = '';
+                                document.getElementById("estado").value = "";
+                                document.getElementById("cargo").value = "";
+                                document.getElementById('fecha').value = '';
+                                document.getElementById("jefatura").value = "";
+                                document.getElementById("selected_ejecutivo").value = null;
+                                document.getElementById("listado").innerHTML = "";
+                                document.getElementById("btn-delete").disabled = true;
+                                document.getElementById("btn-grabar").disabled = true;
+                                break;
+
+                            default:
+                                swal(data.message, "", "success");
+                                getDataTable();
+                                document.getElementById('agencia').value = '';
+                                document.getElementById("estado").value = "";
+                                document.getElementById("cargo").value = "";
+                                document.getElementById('fecha').value = '';
+                                document.getElementById("jefatura").value = "";
+                                document.getElementById("selected_ejecutivo").value = null;
+                                document.getElementById("listado").innerHTML = "";
+                                document.getElementById("btn-delete").disabled = true;
+                                document.getElementById("btn-grabar").disabled = true;
+                                break;
+                        }
+
+
                     })
                     .catch((err) => console.error(err));
             } else {

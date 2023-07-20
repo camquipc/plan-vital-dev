@@ -103,17 +103,22 @@ class AsistenciasController extends Controller
 
     public function store_asistencias(Request $request)
     {
+        $err = false;
+        $errors = [];
+        $index = 0;
+
         $temporal = Temporal::select('*')
             ->where('fecha', $request->get('fecha'))
             ->get();
 
         if ($temporal->count() > 0) {
             foreach ($temporal as $temp) {
-                //valida en la tabla asistencias si existe para el ejecutivo y fecha
-                $temporal = Asistencias::select('id')
+                $temporal = Asistencias::select('asistencias.*', 'ejecutivos.nombres')
+                    ->join('ejecutivos', 'ejecutivos.id', '=', 'asistencias.ejecutivo_id')
                     ->where('fecha', $request->get('fecha'))
-                    ->where('ejecutivo_id', $temp->ejecutivo_id)
+                    ->where('asistencias.ejecutivo_id', $temp->ejecutivo_id)
                     ->get();
+
                 if ($temporal->count() == 0) {
                     Asistencias::create([
                         'agencia_id' => $temp->agencia_id,
@@ -123,15 +128,27 @@ class AsistenciasController extends Controller
                         'jefatura' => $temp->jefatura,
                         'estado_id' => $temp->estado_id
                     ]);
+                } else {
+                    $err = true;
+                    $errors[$index] = [$temporal[0]->nombres];
                 }
+                $index++;
             }
+
             //limpiando la tabla temporal
             Temporal::query()->delete();
-
-            return response()->json([
-                'type' => 'success',
-                'message' => "Asistencias guardadas"
-            ]);
+            if ($err == false) {
+                return response()->json([
+                    'type' => 'success',
+                    'message' => "Asistencias guardadas"
+                ]);
+            } else {
+                return response()->json([
+                    'type' => 'error',
+                    'errors' => $errors,
+                    'message' => "Ejecutivos con asistencias registrada en esta fecha: " . $request->get('fecha') . ""
+                ]);
+            }
         }
     }
 
